@@ -756,7 +756,7 @@ namespace DecisionAssist
             listView2.Items.Clear();
         }
         byte[] img_byte = null;
-        String igloc = "";
+       // String igloc = "";
         private void uploadartifactbutton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
