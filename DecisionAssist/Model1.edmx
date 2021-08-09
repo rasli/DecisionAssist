@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RDSADDModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DecisionRepo">
+          <Key>
+            <PropertyRef Name="DR_id" />
+          </Key>
+          <Property Name="DR_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DR_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DR_des" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DR_type" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DR_QA_impact">
+          <Key>
+            <PropertyRef Name="DR_QA_id" />
+          </Key>
+          <Property Name="DR_QA_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DR_id" Type="int" Nullable="false" />
+          <Property Name="QA_id" Type="int" Nullable="false" />
+          <Property Name="Impact" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QualityAttribute">
+          <Key>
+            <PropertyRef Name="QA_id" />
+          </Key>
+          <Property Name="QA_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QA_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_DR_QA_impact_DecisionRepo">
+          <End Role="DecisionRepo" Type="Self.DecisionRepo" Multiplicity="1" />
+          <End Role="DR_QA_impact" Type="Self.DR_QA_impact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionRepo">
+              <PropertyRef Name="DR_id" />
+            </Principal>
+            <Dependent Role="DR_QA_impact">
+              <PropertyRef Name="DR_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DR_QA_impact_QualityAttribute">
+          <End Role="QualityAttribute" Type="Self.QualityAttribute" Multiplicity="1" />
+          <End Role="DR_QA_impact" Type="Self.DR_QA_impact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualityAttribute">
+              <PropertyRef Name="QA_id" />
+            </Principal>
+            <Dependent Role="DR_QA_impact">
+              <PropertyRef Name="QA_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RDSADDModel1StoreContainer">
+          <EntitySet Name="DecisionRepo" EntityType="Self.DecisionRepo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DR_QA_impact" EntityType="Self.DR_QA_impact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QualityAttribute" EntityType="Self.QualityAttribute" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DR_QA_impact_DecisionRepo" Association="Self.FK_DR_QA_impact_DecisionRepo">
+            <End Role="DecisionRepo" EntitySet="DecisionRepo" />
+            <End Role="DR_QA_impact" EntitySet="DR_QA_impact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DR_QA_impact_QualityAttribute" Association="Self.FK_DR_QA_impact_QualityAttribute">
+            <End Role="QualityAttribute" EntitySet="QualityAttribute" />
+            <End Role="DR_QA_impact" EntitySet="DR_QA_impact" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RDSADDModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DecisionRepo">
+          <Key>
+            <PropertyRef Name="DR_id" />
+          </Key>
+          <Property Name="DR_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DR_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DR_des" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DR_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DR_QA_impact" Relationship="Self.FK_DR_QA_impact_DecisionRepo" FromRole="DecisionRepo" ToRole="DR_QA_impact" />
+        </EntityType>
+        <EntityType Name="DR_QA_impact">
+          <Key>
+            <PropertyRef Name="DR_QA_id" />
+          </Key>
+          <Property Name="DR_QA_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DR_id" Type="Int32" Nullable="false" />
+          <Property Name="QA_id" Type="Int32" Nullable="false" />
+          <Property Name="Impact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DecisionRepo" Relationship="Self.FK_DR_QA_impact_DecisionRepo" FromRole="DR_QA_impact" ToRole="DecisionRepo" />
+          <NavigationProperty Name="QualityAttribute" Relationship="Self.FK_DR_QA_impact_QualityAttribute" FromRole="DR_QA_impact" ToRole="QualityAttribute" />
+        </EntityType>
+        <EntityType Name="QualityAttribute">
+          <Key>
+            <PropertyRef Name="QA_id" />
+          </Key>
+          <Property Name="QA_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QA_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DR_QA_impact" Relationship="Self.FK_DR_QA_impact_QualityAttribute" FromRole="QualityAttribute" ToRole="DR_QA_impact" />
+        </EntityType>
+        <Association Name="FK_DR_QA_impact_DecisionRepo">
+          <End Role="DecisionRepo" Type="Self.DecisionRepo" Multiplicity="1" />
+          <End Role="DR_QA_impact" Type="Self.DR_QA_impact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionRepo">
+              <PropertyRef Name="DR_id" />
+            </Principal>
+            <Dependent Role="DR_QA_impact">
+              <PropertyRef Name="DR_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DR_QA_impact_QualityAttribute">
+          <End Role="QualityAttribute" Type="Self.QualityAttribute" Multiplicity="1" />
+          <End Role="DR_QA_impact" Type="Self.DR_QA_impact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualityAttribute">
+              <PropertyRef Name="QA_id" />
+            </Principal>
+            <Dependent Role="DR_QA_impact">
+              <PropertyRef Name="QA_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RDSADDEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DecisionRepoes" EntityType="Self.DecisionRepo" />
+          <EntitySet Name="DR_QA_impact" EntityType="Self.DR_QA_impact" />
+          <EntitySet Name="QualityAttributes" EntityType="Self.QualityAttribute" />
+          <AssociationSet Name="FK_DR_QA_impact_DecisionRepo" Association="Self.FK_DR_QA_impact_DecisionRepo">
+            <End Role="DecisionRepo" EntitySet="DecisionRepoes" />
+            <End Role="DR_QA_impact" EntitySet="DR_QA_impact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DR_QA_impact_QualityAttribute" Association="Self.FK_DR_QA_impact_QualityAttribute">
+            <End Role="QualityAttribute" EntitySet="QualityAttributes" />
+            <End Role="DR_QA_impact" EntitySet="DR_QA_impact" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RDSADDModel1StoreContainer" CdmEntityContainer="RDSADDEntities2">
+          <EntitySetMapping Name="DecisionRepoes">
+            <EntityTypeMapping TypeName="RDSADDModel1.DecisionRepo">
+              <MappingFragment StoreEntitySet="DecisionRepo">
+                <ScalarProperty Name="DR_id" ColumnName="DR_id" />
+                <ScalarProperty Name="DR_name" ColumnName="DR_name" />
+                <ScalarProperty Name="DR_des" ColumnName="DR_des" />
+                <ScalarProperty Name="DR_type" ColumnName="DR_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DR_QA_impact">
+            <EntityTypeMapping TypeName="RDSADDModel1.DR_QA_impact">
+              <MappingFragment StoreEntitySet="DR_QA_impact">
+                <ScalarProperty Name="DR_QA_id" ColumnName="DR_QA_id" />
+                <ScalarProperty Name="DR_id" ColumnName="DR_id" />
+                <ScalarProperty Name="QA_id" ColumnName="QA_id" />
+                <ScalarProperty Name="Impact" ColumnName="Impact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QualityAttributes">
+            <EntityTypeMapping TypeName="RDSADDModel1.QualityAttribute">
+              <MappingFragment StoreEntitySet="QualityAttribute">
+                <ScalarProperty Name="QA_id" ColumnName="QA_id" />
+                <ScalarProperty Name="QA_name" ColumnName="QA_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

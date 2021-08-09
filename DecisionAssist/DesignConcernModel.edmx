@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DAssistDCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DConst">
+          <Key>
+            <PropertyRef Name="Dc_id" />
+          </Key>
+          <Property Name="Dc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dc_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dc_des" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Project_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FunctReq">
+          <Key>
+            <PropertyRef Name="FR_id" />
+          </Key>
+          <Property Name="FR_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FR_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FR_desc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Project_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DAssistDCModelStoreContainer">
+          <EntitySet Name="DConst" EntityType="Self.DConst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FunctReq" EntityType="Self.FunctReq" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DAssistDCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DConst">
+          <Key>
+            <PropertyRef Name="Dc_id" />
+          </Key>
+          <Property Name="Dc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dc_des" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FunctReq">
+          <Key>
+            <PropertyRef Name="FR_id" />
+          </Key>
+          <Property Name="FR_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FR_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FR_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DAssistDesignConcernEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DConsts" EntityType="Self.DConst" />
+          <EntitySet Name="FunctReqs" EntityType="Self.FunctReq" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DAssistDCModelStoreContainer" CdmEntityContainer="DAssistDesignConcernEntities">
+          <EntitySetMapping Name="DConsts">
+            <EntityTypeMapping TypeName="DAssistDCModel.DConst">
+              <MappingFragment StoreEntitySet="DConst">
+                <ScalarProperty Name="Dc_id" ColumnName="Dc_id" />
+                <ScalarProperty Name="Dc_name" ColumnName="Dc_name" />
+                <ScalarProperty Name="Dc_des" ColumnName="Dc_des" />
+                <ScalarProperty Name="Project_id" ColumnName="Project_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FunctReqs">
+            <EntityTypeMapping TypeName="DAssistDCModel.FunctReq">
+              <MappingFragment StoreEntitySet="FunctReq">
+                <ScalarProperty Name="FR_id" ColumnName="FR_id" />
+                <ScalarProperty Name="FR_name" ColumnName="FR_name" />
+                <ScalarProperty Name="FR_desc" ColumnName="FR_desc" />
+                <ScalarProperty Name="Project_id" ColumnName="Project_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

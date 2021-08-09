@@ -1,0 +1,521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DAssistModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DecisionQAimpact">
+          <Key>
+            <PropertyRef Name="Impact_id" />
+          </Key>
+          <Property Name="Impact_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DR_id" Type="int" />
+          <Property Name="DD_id" Type="int" />
+          <Property Name="QA_id" Type="int" Nullable="false" />
+          <Property Name="Impact" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DecisionRepo">
+          <Key>
+            <PropertyRef Name="DR_id" />
+          </Key>
+          <Property Name="DR_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DR_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DR_des" Type="varchar" MaxLength="50" />
+          <Property Name="DR_type" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DesignDecision">
+          <Key>
+            <PropertyRef Name="DD_id" />
+          </Key>
+          <Property Name="DD_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DD_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DD_des" Type="varchar" MaxLength="50" />
+          <Property Name="Project_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Project_id" />
+          </Key>
+          <Property Name="Project_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Project_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Project_des" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QualityAttribute">
+          <Key>
+            <PropertyRef Name="QA_id" />
+          </Key>
+          <Property Name="QA_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QA_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="QA_des" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QualityGoal">
+          <Key>
+            <PropertyRef Name="QG_id" />
+          </Key>
+          <Property Name="QG_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QA_id" Type="int" Nullable="false" />
+          <Property Name="Project_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Trace">
+          <Key>
+            <PropertyRef Name="Trace_id" />
+          </Key>
+          <Property Name="Trace_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DD_it" Type="int" Nullable="false" />
+          <Property Name="FR_id" Type="int" />
+          <Property Name="Dc_id" Type="int" />
+        </EntityType>
+        <Association Name="FK_DecisionQAimpact_DecisionRepo">
+          <End Role="DecisionRepo" Type="Self.DecisionRepo" Multiplicity="0..1" />
+          <End Role="DecisionQAimpact" Type="Self.DecisionQAimpact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionRepo">
+              <PropertyRef Name="DR_id" />
+            </Principal>
+            <Dependent Role="DecisionQAimpact">
+              <PropertyRef Name="DR_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DecisionQAimpact_DesignDecision">
+          <End Role="DesignDecision" Type="Self.DesignDecision" Multiplicity="0..1" />
+          <End Role="DecisionQAimpact" Type="Self.DecisionQAimpact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignDecision">
+              <PropertyRef Name="DD_id" />
+            </Principal>
+            <Dependent Role="DecisionQAimpact">
+              <PropertyRef Name="DD_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DecisionQAimpact_QualityAttribute">
+          <End Role="QualityAttribute" Type="Self.QualityAttribute" Multiplicity="1" />
+          <End Role="DecisionQAimpact" Type="Self.DecisionQAimpact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualityAttribute">
+              <PropertyRef Name="QA_id" />
+            </Principal>
+            <Dependent Role="DecisionQAimpact">
+              <PropertyRef Name="QA_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DesignDecision_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="DesignDecision" Type="Self.DesignDecision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_id" />
+            </Principal>
+            <Dependent Role="DesignDecision">
+              <PropertyRef Name="Project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QualityGoal_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="QualityGoal" Type="Self.QualityGoal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_id" />
+            </Principal>
+            <Dependent Role="QualityGoal">
+              <PropertyRef Name="Project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QualityGoal_QualityAttribute">
+          <End Role="QualityAttribute" Type="Self.QualityAttribute" Multiplicity="1" />
+          <End Role="QualityGoal" Type="Self.QualityGoal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualityAttribute">
+              <PropertyRef Name="QA_id" />
+            </Principal>
+            <Dependent Role="QualityGoal">
+              <PropertyRef Name="QA_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trace_DesignDecision">
+          <End Role="DesignDecision" Type="Self.DesignDecision" Multiplicity="1" />
+          <End Role="Trace" Type="Self.Trace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignDecision">
+              <PropertyRef Name="DD_id" />
+            </Principal>
+            <Dependent Role="Trace">
+              <PropertyRef Name="DD_it" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DAssistModelStoreContainer">
+          <EntitySet Name="DecisionQAimpact" EntityType="Self.DecisionQAimpact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DecisionRepo" EntityType="Self.DecisionRepo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DesignDecision" EntityType="Self.DesignDecision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QualityAttribute" EntityType="Self.QualityAttribute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QualityGoal" EntityType="Self.QualityGoal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trace" EntityType="Self.Trace" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DecisionQAimpact_DecisionRepo" Association="Self.FK_DecisionQAimpact_DecisionRepo">
+            <End Role="DecisionRepo" EntitySet="DecisionRepo" />
+            <End Role="DecisionQAimpact" EntitySet="DecisionQAimpact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DecisionQAimpact_DesignDecision" Association="Self.FK_DecisionQAimpact_DesignDecision">
+            <End Role="DesignDecision" EntitySet="DesignDecision" />
+            <End Role="DecisionQAimpact" EntitySet="DecisionQAimpact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DecisionQAimpact_QualityAttribute" Association="Self.FK_DecisionQAimpact_QualityAttribute">
+            <End Role="QualityAttribute" EntitySet="QualityAttribute" />
+            <End Role="DecisionQAimpact" EntitySet="DecisionQAimpact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DesignDecision_Project" Association="Self.FK_DesignDecision_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="DesignDecision" EntitySet="DesignDecision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QualityGoal_Project" Association="Self.FK_QualityGoal_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="QualityGoal" EntitySet="QualityGoal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QualityGoal_QualityAttribute" Association="Self.FK_QualityGoal_QualityAttribute">
+            <End Role="QualityAttribute" EntitySet="QualityAttribute" />
+            <End Role="QualityGoal" EntitySet="QualityGoal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trace_DesignDecision" Association="Self.FK_Trace_DesignDecision">
+            <End Role="DesignDecision" EntitySet="DesignDecision" />
+            <End Role="Trace" EntitySet="Trace" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DAssistModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DecisionQAimpact">
+          <Key>
+            <PropertyRef Name="Impact_id" />
+          </Key>
+          <Property Name="Impact_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DR_id" Type="Int32" />
+          <Property Name="DD_id" Type="Int32" />
+          <Property Name="QA_id" Type="Int32" Nullable="false" />
+          <Property Name="Impact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DecisionRepo" Relationship="Self.FK_DecisionQAimpact_DecisionRepo" FromRole="DecisionQAimpact" ToRole="DecisionRepo" />
+          <NavigationProperty Name="DesignDecision" Relationship="Self.FK_DecisionQAimpact_DesignDecision" FromRole="DecisionQAimpact" ToRole="DesignDecision" />
+          <NavigationProperty Name="QualityAttribute" Relationship="Self.FK_DecisionQAimpact_QualityAttribute" FromRole="DecisionQAimpact" ToRole="QualityAttribute" />
+        </EntityType>
+        <EntityType Name="DecisionRepo">
+          <Key>
+            <PropertyRef Name="DR_id" />
+          </Key>
+          <Property Name="DR_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DR_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DR_des" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DR_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DecisionQAimpacts" Relationship="Self.FK_DecisionQAimpact_DecisionRepo" FromRole="DecisionRepo" ToRole="DecisionQAimpact" />
+        </EntityType>
+        <EntityType Name="DesignDecision">
+          <Key>
+            <PropertyRef Name="DD_id" />
+          </Key>
+          <Property Name="DD_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DD_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DD_des" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DecisionQAimpacts" Relationship="Self.FK_DecisionQAimpact_DesignDecision" FromRole="DesignDecision" ToRole="DecisionQAimpact" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_DesignDecision_Project" FromRole="DesignDecision" ToRole="Project" />
+          <NavigationProperty Name="Traces" Relationship="Self.FK_Trace_DesignDecision" FromRole="DesignDecision" ToRole="Trace" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Project_id" />
+          </Key>
+          <Property Name="Project_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Project_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_des" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DesignDecisions" Relationship="Self.FK_DesignDecision_Project" FromRole="Project" ToRole="DesignDecision" />
+          <NavigationProperty Name="QualityGoals" Relationship="Self.FK_QualityGoal_Project" FromRole="Project" ToRole="QualityGoal" />
+        </EntityType>
+        <EntityType Name="QualityAttribute">
+          <Key>
+            <PropertyRef Name="QA_id" />
+          </Key>
+          <Property Name="QA_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QA_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QA_des" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DecisionQAimpacts" Relationship="Self.FK_DecisionQAimpact_QualityAttribute" FromRole="QualityAttribute" ToRole="DecisionQAimpact" />
+          <NavigationProperty Name="QualityGoals" Relationship="Self.FK_QualityGoal_QualityAttribute" FromRole="QualityAttribute" ToRole="QualityGoal" />
+        </EntityType>
+        <EntityType Name="QualityGoal">
+          <Key>
+            <PropertyRef Name="QG_id" />
+          </Key>
+          <Property Name="QG_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QA_id" Type="Int32" Nullable="false" />
+          <Property Name="Project_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_QualityGoal_Project" FromRole="QualityGoal" ToRole="Project" />
+          <NavigationProperty Name="QualityAttribute" Relationship="Self.FK_QualityGoal_QualityAttribute" FromRole="QualityGoal" ToRole="QualityAttribute" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Trace">
+          <Key>
+            <PropertyRef Name="Trace_id" />
+          </Key>
+          <Property Name="Trace_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DD_it" Type="Int32" Nullable="false" />
+          <Property Name="FR_id" Type="Int32" />
+          <Property Name="Dc_id" Type="Int32" />
+          <NavigationProperty Name="DesignDecision" Relationship="Self.FK_Trace_DesignDecision" FromRole="Trace" ToRole="DesignDecision" />
+        </EntityType>
+        <Association Name="FK_DecisionQAimpact_DecisionRepo">
+          <End Role="DecisionRepo" Type="Self.DecisionRepo" Multiplicity="0..1" />
+          <End Role="DecisionQAimpact" Type="Self.DecisionQAimpact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionRepo">
+              <PropertyRef Name="DR_id" />
+            </Principal>
+            <Dependent Role="DecisionQAimpact">
+              <PropertyRef Name="DR_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DecisionQAimpact_DesignDecision">
+          <End Role="DesignDecision" Type="Self.DesignDecision" Multiplicity="0..1" />
+          <End Role="DecisionQAimpact" Type="Self.DecisionQAimpact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignDecision">
+              <PropertyRef Name="DD_id" />
+            </Principal>
+            <Dependent Role="DecisionQAimpact">
+              <PropertyRef Name="DD_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DecisionQAimpact_QualityAttribute">
+          <End Role="QualityAttribute" Type="Self.QualityAttribute" Multiplicity="1" />
+          <End Role="DecisionQAimpact" Type="Self.DecisionQAimpact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualityAttribute">
+              <PropertyRef Name="QA_id" />
+            </Principal>
+            <Dependent Role="DecisionQAimpact">
+              <PropertyRef Name="QA_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DesignDecision_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="DesignDecision" Type="Self.DesignDecision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_id" />
+            </Principal>
+            <Dependent Role="DesignDecision">
+              <PropertyRef Name="Project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trace_DesignDecision">
+          <End Role="DesignDecision" Type="Self.DesignDecision" Multiplicity="1" />
+          <End Role="Trace" Type="Self.Trace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignDecision">
+              <PropertyRef Name="DD_id" />
+            </Principal>
+            <Dependent Role="Trace">
+              <PropertyRef Name="DD_it" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QualityGoal_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="QualityGoal" Type="Self.QualityGoal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_id" />
+            </Principal>
+            <Dependent Role="QualityGoal">
+              <PropertyRef Name="Project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QualityGoal_QualityAttribute">
+          <End Role="QualityAttribute" Type="Self.QualityAttribute" Multiplicity="1" />
+          <End Role="QualityGoal" Type="Self.QualityGoal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualityAttribute">
+              <PropertyRef Name="QA_id" />
+            </Principal>
+            <Dependent Role="QualityGoal">
+              <PropertyRef Name="QA_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DAssistEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DecisionQAimpacts" EntityType="Self.DecisionQAimpact" />
+          <EntitySet Name="DecisionRepoes" EntityType="Self.DecisionRepo" />
+          <EntitySet Name="DesignDecisions" EntityType="Self.DesignDecision" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="QualityAttributes" EntityType="Self.QualityAttribute" />
+          <EntitySet Name="QualityGoals" EntityType="Self.QualityGoal" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Traces" EntityType="Self.Trace" />
+          <AssociationSet Name="FK_DecisionQAimpact_DecisionRepo" Association="Self.FK_DecisionQAimpact_DecisionRepo">
+            <End Role="DecisionRepo" EntitySet="DecisionRepoes" />
+            <End Role="DecisionQAimpact" EntitySet="DecisionQAimpacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DecisionQAimpact_DesignDecision" Association="Self.FK_DecisionQAimpact_DesignDecision">
+            <End Role="DesignDecision" EntitySet="DesignDecisions" />
+            <End Role="DecisionQAimpact" EntitySet="DecisionQAimpacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DecisionQAimpact_QualityAttribute" Association="Self.FK_DecisionQAimpact_QualityAttribute">
+            <End Role="QualityAttribute" EntitySet="QualityAttributes" />
+            <End Role="DecisionQAimpact" EntitySet="DecisionQAimpacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DesignDecision_Project" Association="Self.FK_DesignDecision_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="DesignDecision" EntitySet="DesignDecisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trace_DesignDecision" Association="Self.FK_Trace_DesignDecision">
+            <End Role="DesignDecision" EntitySet="DesignDecisions" />
+            <End Role="Trace" EntitySet="Traces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QualityGoal_Project" Association="Self.FK_QualityGoal_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="QualityGoal" EntitySet="QualityGoals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QualityGoal_QualityAttribute" Association="Self.FK_QualityGoal_QualityAttribute">
+            <End Role="QualityAttribute" EntitySet="QualityAttributes" />
+            <End Role="QualityGoal" EntitySet="QualityGoals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DAssistModelStoreContainer" CdmEntityContainer="DAssistEntities">
+          <EntitySetMapping Name="DecisionQAimpacts">
+            <EntityTypeMapping TypeName="DAssistModel.DecisionQAimpact">
+              <MappingFragment StoreEntitySet="DecisionQAimpact">
+                <ScalarProperty Name="Impact_id" ColumnName="Impact_id" />
+                <ScalarProperty Name="DR_id" ColumnName="DR_id" />
+                <ScalarProperty Name="DD_id" ColumnName="DD_id" />
+                <ScalarProperty Name="QA_id" ColumnName="QA_id" />
+                <ScalarProperty Name="Impact" ColumnName="Impact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DecisionRepoes">
+            <EntityTypeMapping TypeName="DAssistModel.DecisionRepo">
+              <MappingFragment StoreEntitySet="DecisionRepo">
+                <ScalarProperty Name="DR_id" ColumnName="DR_id" />
+                <ScalarProperty Name="DR_name" ColumnName="DR_name" />
+                <ScalarProperty Name="DR_des" ColumnName="DR_des" />
+                <ScalarProperty Name="DR_type" ColumnName="DR_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DesignDecisions">
+            <EntityTypeMapping TypeName="DAssistModel.DesignDecision">
+              <MappingFragment StoreEntitySet="DesignDecision">
+                <ScalarProperty Name="DD_id" ColumnName="DD_id" />
+                <ScalarProperty Name="DD_name" ColumnName="DD_name" />
+                <ScalarProperty Name="DD_des" ColumnName="DD_des" />
+                <ScalarProperty Name="Project_id" ColumnName="Project_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="DAssistModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Project_id" ColumnName="Project_id" />
+                <ScalarProperty Name="Project_name" ColumnName="Project_name" />
+                <ScalarProperty Name="Project_des" ColumnName="Project_des" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QualityAttributes">
+            <EntityTypeMapping TypeName="DAssistModel.QualityAttribute">
+              <MappingFragment StoreEntitySet="QualityAttribute">
+                <ScalarProperty Name="QA_id" ColumnName="QA_id" />
+                <ScalarProperty Name="QA_name" ColumnName="QA_name" />
+                <ScalarProperty Name="QA_des" ColumnName="QA_des" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QualityGoals">
+            <EntityTypeMapping TypeName="DAssistModel.QualityGoal">
+              <MappingFragment StoreEntitySet="QualityGoal">
+                <ScalarProperty Name="QG_id" ColumnName="QG_id" />
+                <ScalarProperty Name="QA_id" ColumnName="QA_id" />
+                <ScalarProperty Name="Project_id" ColumnName="Project_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DAssistModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Traces">
+            <EntityTypeMapping TypeName="DAssistModel.Trace">
+              <MappingFragment StoreEntitySet="Trace">
+                <ScalarProperty Name="Trace_id" ColumnName="Trace_id" />
+                <ScalarProperty Name="DD_it" ColumnName="DD_it" />
+                <ScalarProperty Name="FR_id" ColumnName="FR_id" />
+                <ScalarProperty Name="Dc_id" ColumnName="Dc_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="328d57957f8945729d9d8dbe849af4e2" Name="Diagram1">
+        <EntityTypeShape EntityType="DAssistModel.DecisionQAimpact" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAssistModel.DecisionRepo" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAssistModel.DesignDecision" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAssistModel.Project" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAssistModel.QualityAttribute" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAssistModel.QualityGoal" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAssistModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAssistModel.Trace" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="DAssistModel.FK_DecisionQAimpact_DecisionRepo" ManuallyRouted="false" />
+        <AssociationConnector Association="DAssistModel.FK_DecisionQAimpact_DesignDecision" ManuallyRouted="false" />
+        <AssociationConnector Association="DAssistModel.FK_DecisionQAimpact_QualityAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="DAssistModel.FK_DesignDecision_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="DAssistModel.FK_Trace_DesignDecision" ManuallyRouted="false" />
+        <AssociationConnector Association="DAssistModel.FK_QualityGoal_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="DAssistModel.FK_QualityGoal_QualityAttribute" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
